@@ -102,7 +102,7 @@ node {
     }
 
     stage('Pre-Provision AP') {
-        build job: 'phase1_create_ap_per_zone',
+        build job: 'phase1_create_ap',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -130,8 +130,8 @@ node {
     stage('Arrange Data') {
         build job: 'pickup_data',
                 parameters: [
-                        string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
-                        string(name: 'SCENARIO', value: "${SCENARIO}"),
+                        string(name: 'version', value: "${SZ_VERSION}"),
+                        string(name: 'scenario', value: "${SCENARIO}"),
                         string(name: 'VAR_DIR', value: "${VAR_DIR}"),
                 ],
                 propagate: false
