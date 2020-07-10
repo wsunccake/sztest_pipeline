@@ -30,5 +30,9 @@ sztest/pipepine $ ../bin/jenkins_cli.sh help
 sztest/pipeline $ ../bin/jenkins_cli.sh list-job
 sztest/pipeline $ ../bin/jenkins_cli.sh create-job <job> <file>
 sztest/pipeline $ ../bin/jenkins_cli.sh delete-job <job>
+
+# run quick tool
+sztest/pipeline $ ./quick_run.sh create <stage>
+sztest/pipeline $ ./quick_run.sh delete <stage>
 ```
 
