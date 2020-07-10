@@ -26,7 +26,7 @@ sztest $ export GIT_REPO=https://github.com/wsunccake/sztest_pipeline
 sztest $ export GIT_BRANCH=master
 
 # run jenkins util
-sztest/pipepine $ ../bin/jenkins_cli.sh help
+sztest/pipeline $ ../bin/jenkins_cli.sh help
 sztest/pipeline $ ../bin/jenkins_cli.sh list-job
 sztest/pipeline $ ../bin/jenkins_cli.sh create-job <job> <file>
 sztest/pipeline $ ../bin/jenkins_cli.sh delete-job <job>
