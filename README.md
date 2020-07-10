@@ -18,7 +18,7 @@ sztest $ git clone https://github.com/wsunccake/sztest_pipeline.git pipeline
 
 ```bash
 # setup env
-sztest $ export JENKINS_IP=http://<jenkins_ip>
+sztest $ export JENKINS_IP=<jenkins_ip>
 sztest $ export JENKINS_USER_ID=<username>
 sztest $ export JENKINS_API_TOKEN=<password>
 
