@@ -57,6 +57,7 @@ delete_job_in_stage() {
 
 case $ACTION in
   "create")
+    create_view
     create_job_in_stage
     stop_job_in_stage
   ;;
