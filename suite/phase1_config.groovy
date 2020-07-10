@@ -11,7 +11,7 @@ node {
             ])
     ])
 
-    currentBuild.displayName = "${params.version} - ${params.scenario} - #${currentBuild.number}"
+    currentBuild.displayName = "${params.SZ_VERSION} - ${params.SCENARIO} - #${currentBuild.number}"
 
     stage('Create Domain') {
         build job: 'phase1_create_domain',
