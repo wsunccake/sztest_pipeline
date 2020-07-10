@@ -22,10 +22,13 @@ sztest $ export JENKINS_IP=<jenkins_ip>
 sztest $ export JENKINS_USER_ID=<username>
 sztest $ export JENKINS_API_TOKEN=<password>
 
+sztest $ export GIT_REPO=https://github.com/wsunccake/sztest_pipeline
+sztest $ export GIT_BRANCH=master
+
 # run jenkins util
-sztest $ ./bin/jenkins_cli.sh help
-sztest $ ./bin/jenkins_cli.sh list-job
-sztest $ ./bin/jenkins_cli.sh create-job <job> <file>
-sztest $ ./bin/jenkins_cli.sh delete-job <job>
+sztest/pipepine $ ../bin/jenkins_cli.sh help
+sztest/pipeline $ ../bin/jenkins_cli.sh list-job
+sztest/pipeline $ ../bin/jenkins_cli.sh create-job <job> <file>
+sztest/pipeline $ ../bin/jenkins_cli.sh delete-job <job>
 ```
 
