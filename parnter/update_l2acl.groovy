@@ -71,7 +71,7 @@ done
 
 # update attribute
 letter=`head /dev/urandom | tr -dc A-Za-z | head -c 8`
-jq ".description=\\"\$letter\"" $tmp_json > $data_json
+jq ".description=\\"\$letter\\"" $tmp_json > $data_json
 
 put_l2acl $l2acl_id $data_json
 
