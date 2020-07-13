@@ -36,7 +36,7 @@ source $SZTEST_HOME/conf/default/setup_var.sh
 source $SZTEST_HOME/util/api_util.sh
 source $SZTEST_HOME/util/test_api/phase1.sh
 
-setup_api_util_var
+setup_api_var
 
 echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 

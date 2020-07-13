@@ -17,7 +17,7 @@ pipeline {
         stage('Update Build Name') {
             steps {
                 script {
-                    currentBuild.displayName = "${version} - ${scenario} - #${currentBuild.number}"
+                    currentBuild.displayName = "${SZ_VERSION} - ${SCENARIO} - #${currentBuild.number}"
                 }
 
             }
@@ -35,7 +35,7 @@ source $SZTEST_HOME/conf/default/setup_var.sh
 source $SZTEST_HOME/util/api_util.sh
 source $SZTEST_HOME/util/test_api/phase1.sh
 
-setup_api_util_var
+setup_api_var
 
 echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 
@@ -44,7 +44,6 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 ### gen input
 ###
 
-cd $API_PERF_DIR/public_api/$API_PERF_VER
 mkdir -p $VAR_DIR/output/wlan_groups
 
 NEW_INPUT=zone_wlan_group.inp
