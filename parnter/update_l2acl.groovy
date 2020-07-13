@@ -56,7 +56,7 @@ echo "start job:`date`"
 # login
 pubapi_login $SZ_USERNAME $SZ_PASSWORD
 
-query_all_l2_by_domain_id $domain_id > $VAR_DIR/output/id/l2acl_ids.log
+query_all_l2acl_by_domain_id $domain_id > $VAR_DIR/output/id/l2acl_ids.log
 l2acl_id=`head -1 $VAR_DIR/output/id/l2acl_ids.log | awk -F'|' '{print \$1}'`
 
 get_l2acl_by_id $l2acl_id | sed -n 's/Response body: //p' | jq '.' > tmp.json
