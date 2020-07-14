@@ -64,6 +64,9 @@ time query_all_l2acl_by_domain_id $domain_id > $VAR_DIR/output/id/l2acl_ids.log
 echo "query_all_l3acp_by_domain_id $domain_id > $VAR_DIR/output/id/l3acp_ids.log"
 query_all_l3acp_by_domain_id $domain_id > $VAR_DIR/output/id/l3acp_ids.log
 
+echo "query_all_wifi_calling_by_domain_id $domain_id > $VAR_DIR/output/id/wifi_calling_ids.log"
+query_all_wifi_calling_by_domain_id $domain_id > $VAR_DIR/output/id/wifi_calling_ids.log
+
 # logout
 pubapi_logout
 echo "end job:`date`"
