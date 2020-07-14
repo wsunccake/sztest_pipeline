@@ -49,12 +49,18 @@ echo "start job:`date`"
 # login
 pubapi_login $SZ_USERNAME $SZ_PASSWORD
 
-get_all_domain > $VAR_DIR/output/id/domain_ids.log
-query_all_ap > $VAR_DIR/output/id/ap_zone_domain_id.log
+echo "get_all_domain > $VAR_DIR/output/id/domain_ids.log"
+time get_all_domain > $VAR_DIR/output/id/domain_ids.log
+
+echo "query_all_ap > $VAR_DIR/output/id/ap_zone_domain_id.log"
+time query_all_ap > $VAR_DIR/output/id/ap_zone_domain_id.log
 
 domain_id=`head -1 $VAR_DIR/output/id/domain_ids.log | awk -F'|' '{print $1}'`
 
-query_all_l2acl_by_domain_id $domain_id > $VAR_DIR/output/id/l2acl_ids.log
+echo "query_all_l2acl_by_domain_id $domain_id > $VAR_DIR/output/id/l2acl_ids.log"
+time query_all_l2acl_by_domain_id $domain_id > $VAR_DIR/output/id/l2acl_ids.log
+
+echo "query_all_l3acp_by_domain_id $domain_id > $VAR_DIR/output/id/l3acp_ids.log"
 query_all_l3acp_by_domain_id $domain_id > $VAR_DIR/output/id/l3acp_ids.log
 
 # logout
