@@ -32,6 +32,7 @@ pipeline {
 SZTEST_HOME=/var/lib/jenkins/sztest
 source $SZTEST_HOME/conf/default/setup_var.sh
 source $SZTEST_HOME/util/api_util.sh
+source $SZTEST_HOME/util/common.sh
 source $SZTEST_HOME/util/test_api/parnter.sh
 
 setup_api_var
