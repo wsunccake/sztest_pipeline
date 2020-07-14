@@ -58,7 +58,7 @@ time query_all_ap > $VAR_DIR/output/id/ap_zone_domain_id.log
 
 domain_id=`head -1 $VAR_DIR/output/id/domain_ids.log | awk -F'|' '{print $1}'`
 
-test_functions=(l2acl l3acp wifi_calling device_policy lbs application_policy_v2 user_defined proxy_auth proxy_acct)
+test_functions=(l2acl l3acp wifi_calling device_policy lbs application_policy_v2 user_defined proxy_auth proxy_acct vlan_pooling)
 for f in ${test_functions[@]}; do
   echo "query_all_${f}_by_domain_id $domain_id > $VAR_DIR/output/id/${f}_ids.log"
   time query_all_${f}_by_domain_id $domain_id > $VAR_DIR/output/id/${f}_ids.log
