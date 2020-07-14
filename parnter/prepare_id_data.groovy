@@ -58,14 +58,11 @@ time query_all_ap > $VAR_DIR/output/id/ap_zone_domain_id.log
 
 domain_id=`head -1 $VAR_DIR/output/id/domain_ids.log | awk -F'|' '{print $1}'`
 
-echo "query_all_l2acl_by_domain_id $domain_id > $VAR_DIR/output/id/l2acl_ids.log"
-time query_all_l2acl_by_domain_id $domain_id > $VAR_DIR/output/id/l2acl_ids.log
-
-echo "query_all_l3acp_by_domain_id $domain_id > $VAR_DIR/output/id/l3acp_ids.log"
-query_all_l3acp_by_domain_id $domain_id > $VAR_DIR/output/id/l3acp_ids.log
-
-echo "query_all_wifi_calling_by_domain_id $domain_id > $VAR_DIR/output/id/wifi_calling_ids.log"
-query_all_wifi_calling_by_domain_id $domain_id > $VAR_DIR/output/id/wifi_calling_ids.log
+test_functions=(l2acl l3acp wifi_calling device_policy lbs application_policy_v2 user_defined)
+for f in ${test_functions[@]}; do
+  echo "query_all_${f}_by_domain_id $domain_id > $VAR_DIR/output/id/${f}_ids.log"
+  time query_all_${f}_by_domain_id $domain_id > $VAR_DIR/output/id/${f}_ids.log
+done
 
 # logout
 pubapi_logout
