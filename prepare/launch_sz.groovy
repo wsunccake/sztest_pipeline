@@ -46,7 +46,7 @@ mkdir -p $VAR_DIR/input/sz
 echo -e "${vm_name}\\t${sz_ip}" > $VAR_DIR/input/sz/$SZ_FILE
 echo -e "${vm_name}\\t${sz_ip}" >> $VAR_DIR/input/sz/cluster.inp
 
-wait_until_pingable 20 10s $sz_ip
+is_ping=`wait_until_pingable 20 10s $sz_ip`
 echo "is ping: ${is_ping}"
 [ "x${is_ping}" == "xfalse" ] && exit 1 || exit 0
 '''
