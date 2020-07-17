@@ -1,11 +1,11 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'version', defaultValue: '1.0.0.0', description: '')
-        string(name: 'scenario', defaultValue: 'group0', description: '')
+        string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: '')
+        string(name: 'SCENARIO', defaultValue: '', description: '')
 
-        string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/var/${scenario}', description: '')
-        string(name: 'GCE_IMAGE', defaultValue: 'vscg-${version}', description: '')
+        string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/var/${SCENARIO}', description: '')
+        string(name: 'GCE_IMAGE', defaultValue: 'vscg-${SZ_VERSION}', description: '')
         string(name: 'SZ_FILE', defaultValue: 'sz.inp', description: '')
     }
 
@@ -13,7 +13,7 @@ pipeline {
         stage('Update Build Name') {
             steps {
                 script {
-                    currentBuild.displayName = "${version} - ${scenario} - #${currentBuild.number}"
+                    currentBuild.displayName = "${SZ_VERSION} - ${SCENARIO} - #${currentBuild.number}"
                 }
 
             }
