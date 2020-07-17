@@ -39,7 +39,7 @@ vm_name=${GCE_IMAGE}-${ACCOUNT%%.*}-${RANDOM}
 ### run cli
 ###
 
-launch_sz GCE vm_name
+launch_sz GCE $vm_name
 sz_ip=`gcloud compute instances describe $vm_name | awk '/networkIP/ {print \$2}'`
 
 mkdir -p $VAR_DIR/input/sz
