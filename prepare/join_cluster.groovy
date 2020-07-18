@@ -3,12 +3,10 @@ pipeline {
     parameters {
         string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: '')
         string(name: 'SCENARIO', defaultValue: '', description: '')
-
         string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${params.SCENARIO}', description: '')
-        string(name: 'GCE_IMAGE', defaultValue: 'vscg-${SZ_VERSION}', description: '')
-        string(name: 'SZ_FILE', defaultValue: 'sz.inp', description: '')
+
+        string(name: 'CLUSTER_NAME', defaultValue: '', description: '')
         string(name: 'SZ_CLUSTER_FILE', defaultValue: 'cluster.inp', description: '')
-        string(name: 'SZ_NUMBER', defaultValue: '1', description: '')
     }
 
     stages {
@@ -21,7 +19,7 @@ pipeline {
             }
         }
 
-        stage('Startup SZ') {
+        stage('Join SZ Join') {
             steps {
                 sh '''#!/bin/bash
 ###
@@ -32,25 +30,27 @@ SZTEST_HOME=/var/lib/jenkins/sztest
 source $SZTEST_HOME/conf/default/setup_var.sh
 source $SZTEST_HOME/util/cli_util.sh
 
-setup_gce_var
-
-export GCE_IMAGE=`echo "$GCE_IMAGE" | sed s'/\\./-/'g`
 
 ###
 ### run cli
 ###
 
-mkdir -p $VAR_DIR/input/sz
+for i in `cat $VAR_DIR/input/sz/$SZ_CLUSTER_FILE`; do
+  tmp_ip=`sed -n ${i}p $VAR_DIR/input/sz/$SZ_CLUSTER_FILE | awk '{print \$2}'
+  if [ $i == "1" ]; then
+    export CLUSTER_IP=$tmp_ip
+  else
+    unset SZ_NAME
+    export SZ_IP=$tmp_ip
+    setup_cli_var
+    echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, CLUSTER_NAME: $CLUSTER_NAME, CLUSTER_IP: $CLUSTER_IP"
 
-for i in `seq 1 $SZ_NUMBER`; do
-  vm_name=${GCE_IMAGE}-${ACCOUNT%%.*}-${RANDOM}
-  launch_sz GCE $vm_name
-  sz_ip=`gcloud compute instances describe $vm_name | awk '/networkIP/ {print \\$2}'`
-  [ $i == "1" ] && echo -e "${vm_name}\\t${sz_ip}" > $VAR_DIR/input/sz/$SZ_FILE
-  echo -e "${vm_name}\\t${sz_ip}" >> $VAR_DIR/input/sz/$SZ_CLUSTER_FILE
-  is_ping=`wait_until_pingable 20 10s $sz_ip`
-  echo "is ping: ${is_ping}"
-  [ "x${is_ping}" == "xfalse" ] && exit 1 || exit 0
+    echo "run setup network"
+    $SZTEST_HOME/util/test_cli/setup-network.exp
+
+    echo "run join cluster"
+    $SZTEST_HOME/util/test_cli/setup-as-cluster.exp
+  fi
 done
 '''
             }

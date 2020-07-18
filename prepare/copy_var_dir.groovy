@@ -4,15 +4,15 @@ pipeline {
         string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: '')
         string(name: 'SCENARIO', defaultValue: '', description: '')
 
-        string(name: 'SRC_DIR', defaultValue: '/var/lib/jenkins/sztest/conf/${SCENARIO}', description: '')
-        string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${SCENARIO}', description: '')
+        string(name: 'SRC_DIR', defaultValue: '/var/lib/jenkins/sztest/conf/${params.SCENARIO}', description: '')
+        string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${params.SCENARIO}', description: '')
     }
 
     stages {
         stage('Update Build Name') {
             steps {
                 script {
-                    currentBuild.displayName = "${SZ_VERSION} - ${SCENARIO} - #${currentBuild.number}"
+                    currentBuild.displayName = "${SZ_VERSION} - ${params.SCENARIO} - #${currentBuild.number}"
                 }
 
             }
