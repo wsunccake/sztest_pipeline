@@ -35,8 +35,8 @@ source $SZTEST_HOME/util/cli_util.sh
 ### run cli
 ###
 
-for i in `cat $VAR_DIR/input/sz/$SZ_CLUSTER_FILE`; do
-  tmp_ip=`sed -n ${i}p $VAR_DIR/input/sz/$SZ_CLUSTER_FILE | awk '{print \$2}'
+for i in `wc -l $VAR_DIR/input/sz/$SZ_CLUSTER_FILE | awk '{print \$2}' | xarg -i seq {}`; do
+  tmp_ip=`sed -n ${i}p $VAR_DIR/input/sz/$SZ_CLUSTER_FILE | awk '{print \$2}'`
   if [ $i == "1" ]; then
     export CLUSTER_IP=$tmp_ip
   else
