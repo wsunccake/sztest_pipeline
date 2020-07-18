@@ -50,8 +50,10 @@ for i in `seq 1 $SZ_NUM`; do
   echo -e "${vm_name}\\t${sz_ip}" >> $VAR_DIR/input/sz/$SZ_CLUSTER_FILE
   is_ping=`wait_until_pingable 20 10s $sz_ip`
   echo "is ping: ${is_ping}"
-  [ "x${is_ping}" == "xfalse" ] && exit 1 || exit 0
+  [ "x${is_ping}" == "xfalse" ] && exit 1
 done
+
+exit 0
 '''
             }
         }

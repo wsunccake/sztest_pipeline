@@ -19,7 +19,7 @@ pipeline {
             }
         }
 
-        stage('Join SZ Join') {
+        stage('Join SZ Cluster') {
             steps {
                 sh '''#!/bin/bash
 ###
