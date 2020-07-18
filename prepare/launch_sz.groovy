@@ -8,7 +8,7 @@ pipeline {
         string(name: 'GCE_IMAGE', defaultValue: 'vscg-${SZ_VERSION}', description: '')
         string(name: 'SZ_FILE', defaultValue: 'sz.inp', description: '')
         string(name: 'SZ_CLUSTER_FILE', defaultValue: 'cluster.inp', description: '')
-        string(name: 'SZ_NUMBER', defaultValue: '1', description: '')
+        string(name: 'SZ_NUM', defaultValue: '1', description: '')
     }
 
     stages {
@@ -42,7 +42,7 @@ export GCE_IMAGE=`echo "$GCE_IMAGE" | sed s'/\\./-/'g`
 
 mkdir -p $VAR_DIR/input/sz
 
-for i in `seq 1 $SZ_NUMBER`; do
+for i in `seq 1 $SZ_NUM`; do
   vm_name=${GCE_IMAGE}-${ACCOUNT%%.*}-${RANDOM}
   launch_sz GCE $vm_name
   sz_ip=`gcloud compute instances describe $vm_name | awk '/networkIP/ {print \\$2}'`
