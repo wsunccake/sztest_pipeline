@@ -77,7 +77,7 @@ for f in `ls $TMP_DIR/in_*`; do
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
   # create zone
-  cat $f | xargs -n5 -P $NPROC sh -c 'create_zone_per_partner_domain ${4} ${2} | tee $VAR_DIR/output/zones/${4}.out\'
+  cat $f | xargs -n5 -P $NPROC sh -c 'create_zone ${4} ${2} | tee $VAR_DIR/output/zones/${4}.out\'
     
   # logout
   pubapi_logout
