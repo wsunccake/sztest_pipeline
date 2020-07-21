@@ -51,6 +51,9 @@ INPUT_NUMBER=1000
 TMP_DIR=`mktemp -d`
 echo "TMP DIR: $TMP_DIR"
 
+cp $VAR_DIR/input/partner_domains/domains.inp $TMP_DIR/$NEW_INPUT
+split -l $INPUT_NUMBER $TMP_DIR/$NEW_INPUT $TMP_DIR/in_
+
 
 ###
 ### run api
