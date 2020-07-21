@@ -7,7 +7,7 @@ pipeline {
     parameters {
         string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: '')
         string(name: 'SCENARIO', defaultValue: 'phase1', description: '')
-        string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/var/${scenario}', description: '')
+        string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/var/${SCENARIO}', description: '')
         string(name: 'SZ_IP', defaultValue: '', description: '')
         string(name: 'API_VERSION', defaultValue: '', description: '')
     }
@@ -33,7 +33,7 @@ SZTEST_HOME=/var/lib/jenkins/sztest
 source $SZTEST_HOME/conf/default/setup_var.sh
 source $SZTEST_HOME/util/api_util.sh
 source $SZTEST_HOME/util/test_api/common.sh
-source $SZTEST_HOME/util/test_api/parnter.sh
+source $SZTEST_HOME/util/test_api/partner.sh
 
 setup_api_var
 
