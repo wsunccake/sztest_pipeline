@@ -4,11 +4,12 @@ node {
     properties([
             parameters([
                     string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: ''),
-                    string(name: 'SCENARIO', defaultValue: 'phase1', description: ''),
+                    string(name: 'SCENARIO', defaultValue: '', description: ''),
                     string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${SCENARIO}', description: ''),
                     string(name: 'CLUSTER_NAME', defaultValue: '', description: ''),
 
                     string(name: 'SZ_NUM', defaultValue: '1', description: ''),
+                    string(name: 'GCE_IMAGE', defaultValue: 'vscg-${SZ_VERSION}', description: ''),
 
             ])
     ])
@@ -22,6 +23,7 @@ node {
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
                         string(name: 'VAR_DIR', value: "${VAR_DIR}"),
                         string(name: 'SZ_NUM', value: "${SZ_NUM}"),
+                        string(name: 'GCE_IMAGE', value: "${GCE_IMAGE}"),
                 ]
     }
 
