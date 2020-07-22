@@ -4,7 +4,7 @@ pipeline {
         string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: '')
         string(name: 'SCENARIO', defaultValue: '', description: '')
         string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${params.SCENARIO}', description: '')
-        string(name: 'CLUSTER_NAME', defaultValue: '', description: '')
+        string(name: 'SZ_CLUSTER_FILE', defaultValue: 'cluster.inp', description: '')
     }
 
     stages {
