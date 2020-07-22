@@ -57,7 +57,7 @@ echo "serial number: $sn"
 ###
 
 setup_cli_var
-setup_cli_collectd_var
+setup_cli_pinpoint_var
 
 echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 
