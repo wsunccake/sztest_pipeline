@@ -63,7 +63,7 @@ for f in `ls $TMP_DIR/in_*`; do
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
   # delete wifi calling
-  sed 's/|/ /g' $f | xargs -n2 -P $NPROC sh -c 'delete_wifi_calling ${0} | tee ${VAR_DIR}/output/delete_wifi_calling/${0}.out'
+  sed 's/|/ /g' $f | xargs -n2 -P $NPROC sh -c 'delete_wifi_calling_policy ${0} | tee ${VAR_DIR}/output/delete_wifi_calling/${0}.out'
     
   # logout
   pubapi_logout
