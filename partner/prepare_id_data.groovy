@@ -11,7 +11,7 @@ pipeline {
         string(name: 'SZ_IP', defaultValue: '', description: '')
         string(name: 'API_VERSION', defaultValue: '', description: '')
 
-        string(name: 'COUNT_NUMBER', defaultValue: '5', description: '')
+        string(name: 'COUNT_NUMBER', defaultValue: '100', description: '')
     }
 
     stages {
@@ -57,6 +57,9 @@ time get_all_domain > $VAR_DIR/output/id/domain_ids.log
 
 echo "query_all_ap > $VAR_DIR/output/id/ap_zone_domain_id.log"
 time query_all_ap > $VAR_DIR/output/id/ap_zone_domain_id.log
+
+echo "query_all_wlan > $VAR_DIR/output/id/wlan_zone_domain.log"
+time query_all_wlan > $VAR_DIR/output/id/wlan_zone_domain.log
 
 domain_id=`head -1 $VAR_DIR/output/id/domain_ids.log | awk -F'|' '{print $1}'`
 
