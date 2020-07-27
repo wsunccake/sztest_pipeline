@@ -44,8 +44,13 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 ### gen input
 ###
 
+ID_FILE=proxy_acct_ids.log
+INPUT_NUMBER=1000
+TMP_DIR=`mktemp -d`
+echo "TMP DIR: $TMP_DIR"
+
 mkdir -p $VAR_DIR/output/delete_acct_service
-split -l $INPUT_NUMBER $VAR_DIR/output/id/proxy_acct_ids.log $TMP_DIR/in_
+split -l $INPUT_NUMBER $VAR_DIR/output/id/$ID_FILE $TMP_DIR/in_
 
 
 ###

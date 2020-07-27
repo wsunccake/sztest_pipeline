@@ -44,8 +44,13 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 ### gen input
 ###
 
+ID_FILE=user_defined_ids.log
+INPUT_NUMBER=1000
+TMP_DIR=`mktemp -d`
+echo "TMP DIR: $TMP_DIR"
+
 mkdir -p $VAR_DIR/output/delete_user_defined
-split -l $INPUT_NUMBER $VAR_DIR/output/id/user_defined_ids.log $TMP_DIR/in_
+split -l $INPUT_NUMBER $VAR_DIR/output/id/$ID_FILE $TMP_DIR/in_
 
 
 ###
