@@ -7,9 +7,11 @@ pipeline {
     parameters {
         string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: '')
         string(name: 'SCENARIO', defaultValue: 'phase1', description: '')
-        string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/var/${SCENARIO}', description: '')
+        string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${SCENARIO}', description: '')
         string(name: 'SZ_IP', defaultValue: '', description: '')
         string(name: 'API_VERSION', defaultValue: '', description: '')
+
+        string(name: 'COUNT_NUMBER', defaultValue: '5', description: '')
     }
 
     stages {
@@ -65,7 +67,7 @@ for f in ${test_functions[@]}; do
   [ -f $l ] && rm -fv $l
 done
 
-for domain_id in `sed -n 1,3p $VAR_DIR/output/id/domain_ids.log | sed 's/|.*//'`; do
+for domain_id in `sed -n 1,${COUNT_NUMBER}p $VAR_DIR/output/id/domain_ids.log | sed 's/|.*//'`; do
   for f in ${test_functions[@]}; do
     l=$VAR_DIR/output/id/${f}_ids.log
     echo "query_all_${f}_by_domain_id $domain_id >> $l"
