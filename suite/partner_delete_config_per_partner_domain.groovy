@@ -12,8 +12,9 @@ node {
 
     currentBuild.displayName = "${params.SZ_VERSION} - ${params.SCENARIO} - #${currentBuild.number}"
 
-    stage('Create Partner Domain') {
-        build job: 'partner_create_partner_domain',
+
+    stage('Delete Authentication Per Partner Domain') {
+        build job: 'partner_delete_auth_service_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -25,8 +26,8 @@ node {
                 propagate: false
     }
 
-    stage('Create Zone Per Partner Domain') {
-        build job: 'partner_create_zone_per_partner_domain',
+    stage('Delete Accounting Per Partner Domain') {
+        build job: 'partner_delete_acct_service_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -38,8 +39,8 @@ node {
                 propagate: false
     }
 
-    stage('Create Authentication Per Partner Domain') {
-        build job: 'partner_create_auth_service_per_partner_domain',
+    stage('Delete VLAN Pooling Per Partner Domain') {
+        build job: 'partner_delete_vlan_pooling_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -51,8 +52,8 @@ node {
                 propagate: false
     }
 
-    stage('Create Accounting Per Partner Domain') {
-        build job: 'partner_create_acct_service_per_partner_domain',
+    stage('Delete Application Policy Per Partner Domain') {
+        build job: 'partner_delete_application_policy_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -64,8 +65,8 @@ node {
                 propagate: false
     }
 
-    stage('Create VLAN Pooling Per Partner Domain') {
-        build job: 'partner_create_vlan_pooling_per_partner_domain',
+    stage('Delete User Defined Per Partner Domain') {
+        build job: 'partner_delete_user_defined_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -77,8 +78,8 @@ node {
                 propagate: false
     }
 
-    stage('Create Application Policy Per Partner Domain') {
-        build job: 'partner_create_application_policy_per_partner_domain',
+    stage('Delete L2ACL Per Partner Domain') {
+        build job: 'partner_delete_l2acl_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -90,8 +91,8 @@ node {
                 propagate: false
     }
 
-    stage('Create User Defined Per Partner Domain') {
-        build job: 'partner_create_user_defined_per_partner_domain',
+    stage('Delete L3ACP Per Partner Domain') {
+        build job: 'partner_delete_l3acp_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -103,8 +104,8 @@ node {
                 propagate: false
     }
 
-    stage('Create L2ACL Per Partner Domain') {
-        build job: 'partner_create_l2acl_per_partner_domain',
+    stage('Delete LBS Per Partner Domain') {
+        build job: 'partner_delete_lbs_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -116,8 +117,8 @@ node {
                 propagate: false
     }
 
-    stage('Create L3ACP Per Partner Domain') {
-        build job: 'partner_create_l3acp_per_partner_domain',
+    stage('Delete Wifi Calling Policy Per Partner Domain') {
+        build job: 'partner_delete_wifi_calling_policy_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -129,34 +130,8 @@ node {
                 propagate: false
     }
 
-    stage('Create LBS Per Partner Domain') {
-        build job: 'partner_create_lbs_per_partner_domain',
-                parameters: [
-                        string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
-                        string(name: 'SCENARIO', value: "${SCENARIO}"),
-                        string(name: 'VAR_DIR', value: "${VAR_DIR}"),
-                        string(name: 'SZ_IP', value: "${SZ_IP}"),
-                        string(name: 'NPROC', value: "${NPROC}"),
-                        string(name: 'API_VERSION', value: "${API_VERSION}"),
-                ],
-                propagate: false
-    }
-
-    stage('Create Wifi Calling Policy Per Partner Domain') {
-        build job: 'partner_create_wifi_calling_policy_per_partner_domain',
-                parameters: [
-                        string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
-                        string(name: 'SCENARIO', value: "${SCENARIO}"),
-                        string(name: 'VAR_DIR', value: "${VAR_DIR}"),
-                        string(name: 'SZ_IP', value: "${SZ_IP}"),
-                        string(name: 'NPROC', value: "${NPROC}"),
-                        string(name: 'API_VERSION', value: "${API_VERSION}"),
-                ],
-                propagate: false
-    }
-
-    stage('Create Device Policy Per Partner Domain') {
-        build job: 'partner_create_device_policy_per_partner_domain',
+    stage('Delete Device Policy Per Partner Domain') {
+        build job: 'partner_delete_device_policy_per_partner_domain',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),

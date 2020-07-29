@@ -11,9 +11,6 @@ pipeline {
         string(name: 'SZ_IP', defaultValue: '', description: '')
         string(name: 'NPROC', defaultValue: '2', description: '')
         string(name: 'API_VERSION', defaultValue: '', description: '')
-
-        string(name: 'RADIUS_PORT', defaultValue: '1813', description: '')
-        string(name: 'RADIUS_SECRET', defaultValue: '1234', description: '')
     }
 
     stages {
@@ -26,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Create Accounting Per Partner Domain') {
+        stage('Delete Wifi Calling Per Partner Domain') {
             steps {
                 sh '''#!/bin/bash
 ###
@@ -47,32 +44,13 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 ### gen input
 ###
 
-mkdir -p $VAR_DIR/output/proxy_acct
-
-export radius_port=$RADIUS_PORT
-export radius_secret=$RADIUS_SECRET
-
-NEW_INPUT=partner_domain_proxy_acct.inp
+ID_FILE=wifi_calling_ids.log
 INPUT_NUMBER=1000
 TMP_DIR=`mktemp -d`
 echo "TMP DIR: $TMP_DIR"
 
-for domain_name in `cat $VAR_DIR/input/partner_domains/domains.inp`; do
-  # get domain_id
-  domain_id=`awk -F\\" '/id/{print \$4}' $VAR_DIR/output/partner_domains/$domain_name.out`
-  
-  # create proxy acct
-  i=1
-  for radius_ip in `cat $VAR_DIR/input/proxy_acct/$domain_name.inp`; do
-    if [ ! -z $domain_id ]; then
-      echo "domain: $domain_name $domain_id proxy_acct: $radius_ip $i" >> $TMP_DIR/$NEW_INPUT
-      i=`expr $i + 1`
-    fi
-  done
-done
-
-split -l $INPUT_NUMBER $TMP_DIR/$NEW_INPUT $TMP_DIR/in_
-cp -fv $TMP_DIR/$NEW_INPUT $VAR_DIR/input/proxy_acct/.
+mkdir -p $VAR_DIR/output/delete_wifi_calling
+split -l $INPUT_NUMBER $VAR_DIR/output/id/$ID_FILE $TMP_DIR/in_
 
 
 ###
@@ -84,8 +62,8 @@ for f in `ls $TMP_DIR/in_*`; do
   # login
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
-  # create acct
-  cat $f | xargs -n6 -P $NPROC sh -c 'create_acct_service ${4}.${5} ${4} ${radius_port} ${radius_secret} ${2} | tee ${VAR_DIR}/output/proxy_acct/${1}_${4}.${5}.out'
+  # delete wifi calling
+  sed 's/|/ /g' $f | xargs -n2 -P $NPROC sh -c 'delete_wifi_calling_policy ${0} | tee ${VAR_DIR}/output/delete_wifi_calling/${0}.out'
     
   # logout
   pubapi_logout
@@ -100,7 +78,7 @@ rm -rfv $TMP_DIR
         stage('Check Response') {
             steps {
                 script {
-                    def result = util.checkResponseStatus "${VAR_DIR}/output/proxy_acct"
+                    def result = util.checkResponseStatus "${VAR_DIR}/output/delete_wifi_calling", "204"
                     println result
                     currentBuild.result = result
                 }
@@ -110,7 +88,7 @@ rm -rfv $TMP_DIR
         stage('Statistic Response') {
             steps {
                 script {
-                    util.statisticizeResponse "${VAR_DIR}/output/proxy_acct"
+                    util.statisticizeResponse "${VAR_DIR}/output/delete_wifi_calling", "204"
                 }
             }
         }

@@ -3,7 +3,7 @@ node {
             parameters([
                     string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: ''),
                     string(name: 'SCENARIO', defaultValue: 'partner', description: ''),
-                    string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/var/${SCENARIO}', description: ''),
+                    string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${SCENARIO}', description: ''),
                     string(name: 'SZ_IP', defaultValue: '', description: ''),
                     string(name: 'NPROC', defaultValue: '8', description: ''),
                     string(name: 'API_VERSION', defaultValue: '', description: ''),
