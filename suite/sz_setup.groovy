@@ -67,6 +67,16 @@ node {
                 ]
     }
 
+    stage('Add Entry On Local License Server') {
+        build job: 'prepare_add_entry_on_lls',
+                parameters: [
+                        string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
+                        string(name: 'SCENARIO', value: "${SCENARIO}"),
+                        string(name: 'VAR_DIR', value: "${VAR_DIR}"),
+                        string(name: 'SZ_IP', value: "${szIP}"),
+                ]
+    }
+
     stage('Setup Collectd') {
         if (params.is_monitor_sz == "true") {
             build job: 'prepare_setup-collectd',
