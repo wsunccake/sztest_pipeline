@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Pre-Provision AP Per Zone') {
+        stage('Create 802.1x WLAN With Non Proxy Per Zone') {
             steps {
                 sh '''#!/bin/bash
 ###
@@ -44,27 +44,41 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 ### gen input
 ###
 
-mkdir -p $VAR_DIR/output/aps
+mkdir -p $VAR_DIR/output/8021x_wlans
 
-NEW_INPUT=zone_ap_mac.inp
+NEW_INPUT=zone_std8021x_wlan.inp
 INPUT_NUMBER=1000
 TMP_DIR=`mktemp -d`
 echo "TMP DIR: $TMP_DIR"
 
-for zone_name in `cat $VAR_DIR/input/zones/zones.inp`; do
-  # get zone_id
-  zone_id=`awk -F\\" '/id/{print \$4}' $VAR_DIR/output/zones/$zone_name.out`
+for domain_name in `cat $VAR_DIR/input/partner_domains/domains.inp`; do
+  # get domain_id
+  domain_id=`awk -F\\" '/id/{print \$4}' $VAR_DIR/output/partner_domains/$domain_name.out`
+  
+  if [ ! -z $domain_id ]; then
+    for zone_name in `cat $VAR_DIR/input/zones/$domain_name.inp`; do
+      # get zone_id
+      zone_id=`awk -F\\" '/id/{print \$4}' $VAR_DIR/output/zones/$zone_name.out`
+      
+      if [ ! -z $zone_id ]; then      
+        for name in `grep std8021x $VAR_DIR/input/wlans/$zone_name.inp`; do
+          n=1
+          auth_ip=`sed -n ${n}p $VAR_DIR/input/non_proxy_auth/$zone_name.inp`
+          auth_id=`awk -F\\" '/id/ {print \$4}' $VAR_DIR/output/non_proxy_auth/${zone_name}_${auth_ip}.${n}.out`
+          acct_ip=`sed -n ${n}p $VAR_DIR/input/non_proxy_acct/$zone_name.inp`
+          acct_id=`awk -F\\" '/id/ {print \$4}' $VAR_DIR/output/non_proxy_acct/${zone_name}_${acct_ip}.${n}.out`
+          
+          echo "zone: $zone_name $zone_id wlan: $name non_proxy_auth: $auth_id non_proxy_acct: $acct_id" >> $TMP_DIR/$NEW_INPUT
+        done
+      fi
 
-  for ap_mac in `cat $VAR_DIR/input/aps/$zone_name.inp`; do
-    if [ ! -z $zone_id ]; then
-      echo "zone: $zone_name $zone_id ap_mac: $ap_mac" >> $TMP_DIR/$NEW_INPUT
-    fi
-  done
+    done
+  fi
 
 done
 
 split -l $INPUT_NUMBER $TMP_DIR/$NEW_INPUT $TMP_DIR/in_
-cp -fv $TMP_DIR/$NEW_INPUT $VAR_DIR/input/aps/.
+cp -fv $TMP_DIR/$NEW_INPUT $VAR_DIR/input/wlans/.
 
 
 ###
@@ -77,7 +91,7 @@ for f in `ls $TMP_DIR/in_*`; do
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
   # create ap per zone
-  cat $f | xargs -n5 -P $NPROC sh -c 'create_ap ${4} "" "" ${2} | tee ${VAR_DIR}/output/aps/${4}.out'
+  cat $f | xargs -n9 -P $NPROC sh -c 'create_8021x_wlan_with_non_proxy ${4} ${2} ${6} ${8} | tee $VAR_DIR/output/8021x_wlans/${1}_${4}.out'
     
   # logout
   pubapi_logout
@@ -92,7 +106,7 @@ rm -rfv $TMP_DIR
         stage('Check Response') {
             steps {
                 script {
-                    def result = util.checkResponseStatus "${VAR_DIR}/output/aps"
+                    def result = util.checkResponseStatus "${VAR_DIR}/output/8021x_wlans"
                     println result
                     currentBuild.result = result
                 }
@@ -102,7 +116,7 @@ rm -rfv $TMP_DIR
         stage('Statistic Response') {
             steps {
                 script {
-                    util.statisticizeResponse "${VAR_DIR}/output/aps"
+                    util.statisticizeResponse "${VAR_DIR}/output/8021x_wlans"
                 }
             }
         }
