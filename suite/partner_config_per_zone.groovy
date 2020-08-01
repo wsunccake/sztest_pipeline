@@ -65,7 +65,7 @@ node {
     }
 
     stage('Create Hotspot Per Zone') {
-        build job: 'partner_partner_create_hotspot_per_zone',
+        build job: 'partner_create_hotspot_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
