@@ -13,7 +13,7 @@ node {
     currentBuild.displayName = "${params.SZ_VERSION} - ${params.SCENARIO} - #${currentBuild.number}"
 
     stage('Create Non Proxy Auth Per Zone') {
-        build job: 'create_non_proxy_auth_service_per_zone',
+        build job: 'partner_create_non_proxy_auth_service_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -26,7 +26,7 @@ node {
     }
 
     stage('Create Non Proxy Acct Per Zone') {
-        build job: 'create_non_proxy_acct_service_per_zone',
+        build job: 'partner_create_non_proxy_acct_service_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -39,7 +39,7 @@ node {
     }
 
     stage('Create PSK WLAN Per Zone') {
-        build job: 'create_psk_wlan_per_zone',
+        build job: 'partner_create_psk_wlan_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -52,7 +52,7 @@ node {
     }
 
     stage('Create 802.1x WLAN With Non Proxy Per Zone') {
-        build job: 'create_8021x_wlan_with_non_proxy_per_zone',
+        build job: 'partner_create_8021x_wlan_with_non_proxy_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -65,7 +65,7 @@ node {
     }
 
     stage('Create Hotspot Per Zone') {
-        build job: 'create_hotspot_per_zone',
+        build job: 'partner_partner_create_hotspot_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -78,7 +78,7 @@ node {
     }
 
     stage('Create WISPr MAC WLAN With Proxy Per Zone') {
-        build job: 'create_wispr_mac_wlan_with_proxy_per_zone',
+        build job: 'partner_create_wispr_mac_wlan_with_proxy_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -91,7 +91,7 @@ node {
     }
 
     stage('Create WISPr WLAN With Proxy Per Zone') {
-        build job: 'create_wispr_wlan_with_proxy_per_zone',
+        build job: 'partner_create_wispr_wlan_with_proxy_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
@@ -104,7 +104,7 @@ node {
     }
 
     stage('AP Pre-Provision Per Zone') {
-        build job: 'create_ap_per_zone',
+        build job: 'partner_create_ap_per_zone',
                 parameters: [
                         string(name: 'SZ_VERSION', value: "${SZ_VERSION}"),
                         string(name: 'SCENARIO', value: "${SCENARIO}"),
