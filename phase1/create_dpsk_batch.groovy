@@ -7,7 +7,7 @@ pipeline {
     parameters {
         string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: '')
         string(name: 'SCENARIO', defaultValue: 'phase1', description: '')
-        string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/var/${scenario}', description: '')
+        string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/${SCENARIO}/${SZ_VERSION}', description: '')
         string(name: 'SZ_IP', defaultValue: '', description: '')
         string(name: 'NPROC', defaultValue: '2', description: '')
         string(name: 'API_VERSION', defaultValue: '', description: '')
