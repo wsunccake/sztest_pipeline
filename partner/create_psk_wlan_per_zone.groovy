@@ -1,6 +1,6 @@
 library identifier: 'dynamic-libary@master', retriever: modernSCM(
         [$class: 'GitSCMSource',
-         remote: 'https://github.com/wsunccake/wsunccake.git'])
+         remote: 'https://github.com/wsunccake/sztest_pipeline.git'])
 
 pipeline {
     agent any
@@ -11,9 +11,6 @@ pipeline {
         string(name: 'SZ_IP', defaultValue: '', description: '')
         string(name: 'NPROC', defaultValue: '2', description: '')
         string(name: 'API_VERSION', defaultValue: '', description: '')
-
-        string(name: 'SZ_IP', defaultValue: '', description: '')
-        string(name: 'NPROC', defaultValue: '2', description: '')
     }
 
     stages {
