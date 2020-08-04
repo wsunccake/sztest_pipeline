@@ -5,9 +5,9 @@ pipeline {
         string(name: 'SCENARIO', defaultValue: '', description: '')
         string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${SCENARIO}', description: '')
 
-        string(name: 'MADSZ_IMAGE', defaultValue: 'ubuntu-minimal-1804-bionic-v20191024', description: '')
+        string(name: 'MADSZ_IMAGE', defaultValue: 'ubuntu-minimal-1804-bionic-v20200729', description: '')
         string(name: 'MADSZ_IMAGE_PROJECT', defaultValue: 'ubuntu-os-cloud', description: '')
-        string(name: 'MADSZ_TGZ', defaultValue: 'madSZ-v5.2-38-u1804.tar.xz', description: '')
+        string(name: 'MADSZ_TGZ', defaultValue: 'madSZ-v5.2.1-14-u1804.tar.xz', description: '')
     }
 
     stages {
@@ -32,6 +32,7 @@ source $SZTEST_HOME/conf/default/setup_var.sh
 source $SZTEST_HOME/util/cli_util.sh
 
 setup_gce_var
+setup_cli_sim_var
 
 
 ###
@@ -41,7 +42,7 @@ setup_gce_var
 mkdir -p $VAR_DIR/input/sim
 [ -f $VAR_DIR/input/sim/sim.inp ] && rm $VAR_DIR/input/sim/sim.inp
 
-TMP_DIR=`mktemp sim-${SZ_VERSION}-XXXXXXXXXX --tmpdir=/tmp`
+TMP_DIR=`mktemp sim-${SZ_VERSION}-XXXXXXXXXX --tmpdir=/tmp -d`
 TMP_DATE=`date +%s`
 TMP_INVENTORY=${TMP_DIR}/${TMP_DATE}
 
