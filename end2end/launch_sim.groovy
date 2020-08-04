@@ -65,10 +65,12 @@ for i in `seq $sim_num`; do
   
   is_ping=`wait_until_pingable 30 10s $madsz_ip`
   echo "is ping: ${is_ping}"
+  ssh ${SIM_USER}@${madsz_ip} uptime
   
   echo -e "${vm_name}\\t${madsz_ip}" >> $VAR_DIR/input/sim/sim.inp
   echo -e "${vm_name}\\tansible_connection=ssh\\tansible_ssh_host=${madsz_ip}\\tansible_ssh_port=22\\tansible_ssh_user=${SIM_USER}\n" >> ${TMP_INVENTORY}
 done
+sleep 60
 
 # run playbook
 echo "[madsz]" >> ${TMP_INVENTORY}
@@ -90,7 +92,6 @@ fi
 # reboot sim
 echo "ansible madsz -i ${TMP_INVENTORY} -m command -a \"sudo reboot\" -v"
 ansible madsz -i ${TMP_INVENTORY} -m command -a "sudo reboot" -v
-
 sleep 300
 
 echo "ansible madsz -i ${TMP_INVENTORY} -m command -a \"uptime\" -v"
