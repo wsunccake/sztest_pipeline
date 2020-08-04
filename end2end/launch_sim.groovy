@@ -14,7 +14,7 @@ pipeline {
         stage('Update Build Name') {
             steps {
                 script {
-                    currentBuild.displayName = "${version} - ${scenario} - #${currentBuild.number}"
+                    currentBuild.displayName = "${SZ_VERSION} - ${SCENARIO} - #${currentBuild.number}"
                 }
 
             }
@@ -41,9 +41,9 @@ setup_gce_var
 mkdir -p $VAR_DIR/input/sim
 [ -f $VAR_DIR/input/sim/sim.inp ] && rm $VAR_DIR/input/sim/sim.inp
 
-TMP_DIR=`mktemp sim-${SZ_VERSION}-XXXXXXXXXX --tmpdir=/tmp)`
+TMP_DIR=`mktemp sim-${SZ_VERSION}-XXXXXXXXXX --tmpdir=/tmp`
 TMP_DATE=`date +%s`
-TMP_INVENTORY=${TMP_DIR}/${TMP_DATA}
+TMP_INVENTORY=${TMP_DIR}/${TMP_DATE}
 
 
 ###
@@ -59,7 +59,7 @@ for i in `seq $sim_num`; do
     vm_name=simtool`awk '{print \$1}' $VAR_DIR/input/sz/sz.inp | sed s/vscg//`
   fi
   vm_name=${vm_name}-${i}
-  launch_sz GCE $vm_name
+  launch_sim GCE $vm_name
   madsz_ip=`gcloud compute instances describe $vm_name | awk '/networkIP/ {print \$2}'`
   
   is_ping=`wait_until_pingable 30 10s $madsz_ip`
