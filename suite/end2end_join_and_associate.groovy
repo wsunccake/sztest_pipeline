@@ -1,7 +1,7 @@
 node {
     properties([
             parameters([
-                    // for common
+                    // common
                     string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: ''),
                     string(name: 'SCENARIO', defaultValue: 'partner', description: ''),
                     string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${SCENARIO}', description: ''),
@@ -9,19 +9,19 @@ node {
                     string(name: 'NPROC', defaultValue: '8', description: ''),
                     string(name: 'API_VERSION', defaultValue: '', description: ''),
 
-                    // for end2end_launch_sim
+                    // end2end_launch_sim
                     string(name: 'MADSZ_IMAGE', defaultValue: 'ubuntu-minimal-1804-bionic-v20200729', description: ''),
                     string(name: 'MADSZ_IMAGE_PROJECT', defaultValue: 'ubuntu-os-cloud', description: ''),
                     string(name: 'MADSZ_TGZ', defaultValue: 'madSZ-v5.2.1-14-u1804.tar.xz', description: ''),
 
-                    // for end2end_join_ap
+                    // end2end_join_ap
                     string(name: 'AP_VERSION', defaultValue: '', description: ''),
                     string(name: 'AP_MODEL', defaultValue: 'R710', description: ''),
 
-                    // for end2end_monitor_ap, end2end_monitor_ue
+                    // end2end_monitor_ap, end2end_monitor_ue
                     string(name: 'AP_NUM', defaultValue: '1', description: ''),
                     string(name: 'UE_NUM', defaultValue: '1', description: ''),
-                    string(name: 'WAITING_TIME', defaultValue: '600', description: ''),
+                    string(name: 'WAITING_TIME', defaultValue: '900', description: ''),
             ])
     ])
 
