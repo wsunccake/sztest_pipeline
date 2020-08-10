@@ -5,6 +5,7 @@ pipeline {
         string(name: 'SCENARIO', defaultValue: '', description: '')
         string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${SCENARIO}', description: '')
 
+        string(name: 'NPROC', defaultValue: '8', description: '')
     }
 
     stages {
