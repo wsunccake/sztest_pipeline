@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Delete LBS Per Partner Domain') {
+        stage('Delete L2ACL Per Partner Domain') {
             steps {
                 sh '''#!/bin/bash
 ###
@@ -44,12 +44,12 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 ### gen input
 ###
 
-ID_FILE=lbs_ids.log
+ID_FILE=wlan_zone_domain.log
 INPUT_NUMBER=1000
 TMP_DIR=`mktemp -d`
 echo "TMP DIR: $TMP_DIR"
 
-mkdir -p $VAR_DIR/output/delete_lbs
+mkdir -p $VAR_DIR/output/delete_wlan
 split -l $INPUT_NUMBER $VAR_DIR/output/id/$ID_FILE $TMP_DIR/in_
 
 
@@ -62,8 +62,8 @@ for f in `ls $TMP_DIR/in_*`; do
   # login
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
-  # delete lbs
-  sed 's/|/ /g' $f | xargs -n2 -P $NPROC sh -c 'delete_lbs ${0} | tee ${VAR_DIR}/output/delete_lbs/${0}.out'
+  # delete wlan
+  sed 's/|/ /g' $f | xargs -n5 -P $NPROC sh -c 'delete_wlan ${0} ${2} | tee ${VAR_DIR}/output/delete_wlan/${0}.out'
     
   # logout
   pubapi_logout
@@ -78,7 +78,7 @@ rm -rfv $TMP_DIR
         stage('Check Response') {
             steps {
                 script {
-                    def result = util.checkResponseStatus "${VAR_DIR}/output/delete_lbs", "200"
+                    def result = util.checkResponseStatus "${VAR_DIR}/output/delete_wlan", "204"
                     println result
                     currentBuild.result = result
                 }
@@ -88,7 +88,7 @@ rm -rfv $TMP_DIR
         stage('Statistic Response') {
             steps {
                 script {
-                    util.statisticizeResponse "${VAR_DIR}/output/delete_lbs", "200"
+                    util.statisticizeResponse "${VAR_DIR}/output/delete_wlan", "204"
                 }
             }
         }
