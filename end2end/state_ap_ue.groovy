@@ -53,6 +53,7 @@ if [ ! -f $SIM_INPUT ]; then
 fi
 
 awk '{print \$2}' $VAR_DIR/input/sim/sim.inp | xargs -P ${NPROC} -i sh -c 'state_ap_ue {}'
+echo "total ue: `awk '/RUN/{sum += \$2} END{print sum}' ${VAR_DIR}/input/sim/*ue.log`"
 '''
             }
         }
