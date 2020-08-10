@@ -54,12 +54,13 @@ TMP_INVENTORY=${TMP_DIR}/${TMP_DATE}
 # launch sim
 sim_num=`find $VAR_DIR/input/sim -maxdepth 1 -type d | wc -l`
 sim_num=`expr $sim_num - 1`
+template_vm_name=simtool-${ACCOUNT%%.*}-${RANDOM}
+if [ -f $VAR_DIR/input/sz/sz.inp ]; then
+  template_vm_name=simtool`awk '{print \$1}' $VAR_DIR/input/sz/sz.inp | sed s/vscg//`
+fi
+
 for i in `seq $sim_num`; do
-  vm_name=simtool-${ACCOUNT%%.*}-${RANDOM}
-  if [ -f $VAR_DIR/input/sz/sz.inp ]; then
-    vm_name=simtool`awk '{print \$1}' $VAR_DIR/input/sz/sz.inp | sed s/vscg//`
-  fi
-  vm_name=${vm_name}-${i}
+  vm_name=${template_vm_name}-${i}
   launch_sim GCE $vm_name
   madsz_ip=`gcloud compute instances describe $vm_name | awk '/networkIP/ {print \$2}'`
   
