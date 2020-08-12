@@ -51,7 +51,7 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 mkdir -p $VAR_DIR/output/locustio
 
 
-if [ "x${TASK_DIR}" == "xpartner-query" ] || [ "x${TASK_DIR}" == "xpartner-updaet" ] ; then
+if [ "x${TASK_DIR}" == "xpartner-query" ] || [ "x${TASK_DIR}" == "xpartner-update" ] ; then
   export DOMAIN_ID_FILE=${VAR_DIR}/output/id/domain_ids.log
   echo "export DOMAIN_ID_FILE=$DOMAIN_ID_FILE"
 
