@@ -6,8 +6,8 @@ pipeline {
         string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${params.SCENARIO}', description: '')
         string(name: 'SZ_IP', defaultValue: '', description: '')
 
-        string(name: 'LOCAL_LICENSE_SERVER_DEVICE_TYPE', defaultValue: '${params.SCENARIO}-${SZ_VERSION}', description: '')
-        string(name: 'LOCAL_LICENSE_SERVER_IP_DEVICE_ALIAS', defaultValue: '${params.SCENARIO}-${SZ_VERSION}', description: '')
+        string(name: 'LOCAL_LICENSE_SERVER_DEVICE_TYPE', defaultValue: '${SCENARIO}-${SZ_VERSION}', description: '')
+        string(name: 'LOCAL_LICENSE_SERVER_IP_DEVICE_ALIAS', defaultValue: '${SCENARIO}-${SZ_VERSION}', description: '')
     }
 
     stages {
