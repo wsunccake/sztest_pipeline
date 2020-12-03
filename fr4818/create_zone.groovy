@@ -51,13 +51,8 @@ INPUT_NUMBER=1000
 TMP_DIR=`mktemp -d`
 echo "TMP DIR: $TMP_DIR"
 
-# create zone
-for zone_name in `cat $VAR_DIR/input/zones/zones.inp`; do
-  echo "zone: $zone_name" >> $TMP_DIR/$NEW_INPUT
-done
-
+cp -fv $VAR_DIR/input/zones/zones.inp $TMP_DIR/$NEW_INPUT
 split -l $INPUT_NUMBER $TMP_DIR/$NEW_INPUT $TMP_DIR/in_
-cp -fv $TMP_DIR/$NEW_INPUT $VAR_DIR/input/zones/.
 
 
 ###
@@ -70,7 +65,7 @@ for f in `ls $TMP_DIR/in_*`; do
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
   # create ap per zone
-  cat $f | xargs -n2 -P $NPROC sh -c 'create_zone $1 | tee $VAR_DIR/output/zones/$1.out'
+  cat $f | xargs -i -P $NPROC sh -c 'create_zone {} | tee $VAR_DIR/output/zones/{}.out'
     
   # logout
   pubapi_logout

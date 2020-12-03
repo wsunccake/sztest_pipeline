@@ -46,20 +46,13 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 
 mkdir -p $VAR_DIR/output/lbs
 
-NEW_INPUT=partner_domain_lbs.inp
+NEW_INPUT=lbs.inp
 INPUT_NUMBER=1000
 TMP_DIR=`mktemp -d`
 echo "TMP DIR: $TMP_DIR"
 
-# create lbs
-for name in `cat $VAR_DIR/input/lbs/$domain_name.inp`; do
-  if [ ! -z $domain_id ]; then
-    echo "domain: $domain_name $domain_id lbs: $name" >> $TMP_DIR/$NEW_INPUT
-  fi
-done
-
+cp $VAR_DIR/input/lbs/lbs.inp $TMP_DIR/$NEW_INPUT
 split -l $INPUT_NUMBER $TMP_DIR/$NEW_INPUT $TMP_DIR/in_
-cp -fv $TMP_DIR/$NEW_INPUT $VAR_DIR/input/lbs/.
 
 
 ###
@@ -72,7 +65,7 @@ for f in `ls $TMP_DIR/in_*`; do
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
   # create lbs
-  cat $f | xargs -n5 -P $NPROC sh -c 'create_lbs ${4} ${2} | tee ${VAR_DIR}/output/lbs/${1}_${4}.out'
+  cat $f | xargs -i -P $NPROC sh -c 'create_lbs {} | tee ${VAR_DIR}/output/lbs/{}.out'
     
   # logout
   pubapi_logout
