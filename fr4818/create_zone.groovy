@@ -33,7 +33,7 @@ pipeline {
 SZTEST_HOME=/var/lib/jenkins/sztest
 source $SZTEST_HOME/conf/default/setup_var.sh
 source $SZTEST_HOME/util/api_util.sh
-source $SZTEST_HOME/util/test_api/phase1.sh
+source $SZTEST_HOME/util/test_api/fr4818.sh
 
 setup_api_var
 
@@ -46,21 +46,14 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 
 mkdir -p $VAR_DIR/output/zones
 
-NEW_INPUT=domain_zone.inp
+NEW_INPUT=zone.inp
 INPUT_NUMBER=1000
 TMP_DIR=`mktemp -d`
 echo "TMP DIR: $TMP_DIR"
 
-for domain_name in `cat $VAR_DIR/input/domains/domains.inp`; do
-  # get domain_id
-  domain_id=`awk -F\\" '/id/{print \$4}' $VAR_DIR/output/domains/$domain_name.out`
-  
-  # create zone
-  for zone_name in `cat $VAR_DIR/input/zones/$domain_name.inp`; do
-    if [ ! -z $domain_id ]; then
-      echo "domain: $domain_name $domain_id zone: $zone_name" >> $TMP_DIR/$NEW_INPUT
-    fi
-  done
+# create zone
+for zone_name in `cat $VAR_DIR/input/zones/zones.inp`; do
+  echo "zone: $zone_name" >> $TMP_DIR/$NEW_INPUT
 done
 
 split -l $INPUT_NUMBER $TMP_DIR/$NEW_INPUT $TMP_DIR/in_
@@ -77,7 +70,7 @@ for f in `ls $TMP_DIR/in_*`; do
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
   # create ap per zone
-  cat $f | xargs -n5 -P $NPROC sh -c 'create_zone $4 $2 | tee $VAR_DIR/output/zones/$4.out'
+  cat $f | xargs -n5 -P $NPROC sh -c 'create_zone $2 | tee $VAR_DIR/output/zones/$4.out'
     
   # logout
   pubapi_logout
