@@ -59,7 +59,7 @@ for zone_name in `cat $VAR_DIR/input/zones/zones.inp`; do
 
   lbs_name=`sed -n ${line}p $VAR_DIR/input/lbs/lbs.inp`
   lbs_id=`awk -F\\" '/id/{print \$4}' $VAR_DIR/output/lbs/${lbs_name}.out`
-  echo "zone: $zone_name $zone_id lsb: $lbs_name $lbs_id"
+  echo "zone: $zone_name $zone_id lsb: $lbs_name $lbs_id" >> $TMP_DIR/$NEW_INPUT
 done
 
 split -l $INPUT_NUMBER $TMP_DIR/$NEW_INPUT $TMP_DIR/in_
