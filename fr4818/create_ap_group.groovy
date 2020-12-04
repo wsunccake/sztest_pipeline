@@ -5,12 +5,12 @@ library identifier: 'dynamic-libary@master', retriever: modernSCM(
 pipeline {
     agent any
     parameters {
-        string(name: 'SZ_VERSION', defaultValue: '1.0.0.0', description: '')
-        string(name: 'SCENARIO', defaultValue: 'phase1', description: '')
-        string(name: 'VAR_DIR', defaultValue: '/var/lib/jenkins/api_perf/${SCENARIO}/${SZ_VERSION}', description: '')
+        string(name: 'SZ_VERSION', defaultValue: '5.2.1.0.515', description: '')
+        string(name: 'SCENARIO', defaultValue: 'fr4818', description: '')
+        string(name: 'VAR_DIR', defaultValue: '/usr/share/nginx/html/api_perf/${SZ_VERSION}/${SCENARIO}', description: '')
         string(name: 'SZ_IP', defaultValue: '', description: '')
-        string(name: 'NPROC', defaultValue: '2', description: '')
-        string(name: 'API_VERSION', defaultValue: '', description: '')
+        string(name: 'NPROC', defaultValue: '8', description: '')
+        string(name: 'API_VERSION', defaultValue: 'v9_1', description: '')
     }
 
     stages {
@@ -33,7 +33,7 @@ pipeline {
 SZTEST_HOME=/var/lib/jenkins/sztest
 source $SZTEST_HOME/conf/default/setup_var.sh
 source $SZTEST_HOME/util/api_util.sh
-source $SZTEST_HOME/util/test_api/phase1.sh
+source $SZTEST_HOME/util/test_api/fr4818.sh
 
 setup_api_var
 
