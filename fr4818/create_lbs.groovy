@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Create LBS') {
+        stage('Delete LBS') {
             steps {
                 sh '''#!/bin/bash
 ###
@@ -44,7 +44,7 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 ### gen input
 ###
 
-mkdir -p $VAR_DIR/output/lbs
+mkdir -p $VAR_DIR/output/delete_lbs
 
 NEW_INPUT=lbs.inp
 INPUT_NUMBER=1000

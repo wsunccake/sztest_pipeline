@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Patch Zone With LBS') {
+        stage('Delete Zone') {
             steps {
                 sh '''#!/bin/bash
 ###
@@ -44,26 +44,18 @@ echo "SZ_IP: $SZ_IP, SZ_NAME: $SZ_NAME, SZ_VERSION: $SZ_VERSION"
 ### gen input
 ###
 
-mkdir -p $VAR_DIR/output/patch_zone_with_lbs
+mkdir -p $VAR_DIR/output/delete_zone
 
-NEW_INPUT=zone_lbs.inp
+NEW_INPUT=all_lbs.inp
 INPUT_NUMBER=1000
 TMP_DIR=`mktemp -d`
 echo "TMP DIR: $TMP_DIR"
 
-line=0
-for zone_name in `cat $VAR_DIR/input/zones/zones.inp`; do
-  # get zone_id
-  line=`expr $line + 1`
-  zone_id=`awk -F\\" '/id/{print \$4}' $VAR_DIR/output/zones/${zone_name}.out`
-
-  lbs_name=`sed -n ${line}p $VAR_DIR/input/lbs/lbs.inp`
-  lbs_id=`awk -F\\" '/id/{print \$4}' $VAR_DIR/output/lbs/${lbs_name}.out`
-  echo "zone: $zone_name $zone_id lsb: $lbs_name $lbs_id" >> $TMP_DIR/$NEW_INPUT
-done
+[ -f $TMP_DIR/$NEW_INPUT ] && rm $TMP_DIR/$NEW_INPUT 
+query_all_lbs_by_domain_id ${DEFAULT_DOMAIN_UUID} >> $TMP_DIR/$NEW_INPUT
 
 split -l $INPUT_NUMBER $TMP_DIR/$NEW_INPUT $TMP_DIR/in_
-cp -fv $TMP_DIR/$NEW_INPUT $VAR_DIR/input/zones/.
+cp $TMP_DIR/$NEW_INPUT $VAR_DIR/output/delete_lbs/. 
 
 
 ###
@@ -75,8 +67,8 @@ for f in `ls $TMP_DIR/in_*`; do
   # login
   pubapi_login $SZ_USERNAME $SZ_PASSWORD
   
-  # create ap per zone
-  cat $f | xargs -n6 -P $NPROC sh -c 'patch_zone_with_lbs $2 $5 | tee $VAR_DIR/output/patch_zone_with_lbs/$1_$4.out'
+  # delete lbs
+  cat $f | xargs -i -P $NPROC sh -c 'delete_lbs {}'
     
   # logout
   pubapi_logout
@@ -91,7 +83,7 @@ rm -rfv $TMP_DIR
         stage('Check Response') {
             steps {
                 script {
-                    def result = util.checkResponseStatus("${VAR_DIR}/output/patch_zone_with_lbs", "204")
+                    def result = util.checkResponseStatus("${VAR_DIR}/output/delete_lbs", "200")
                     println result
                     currentBuild.result = result
                 }
@@ -101,7 +93,7 @@ rm -rfv $TMP_DIR
         stage('Statistic Response') {
             steps {
                 script {
-                    util.statisticizeResponse("${VAR_DIR}/output/patch_zone_with_lbs", "204", "statistics.awk")
+                    util.statisticizeResponse("${VAR_DIR}/output/delete_lbs", "200", "statistics.awk")
                 }
             }
         }
