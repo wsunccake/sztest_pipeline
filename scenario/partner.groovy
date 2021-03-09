@@ -160,7 +160,7 @@ node {
                             string(name: 'SCENARIO', value: "${SCENARIO}"),
                             string(name: 'VAR_DIR', value: "${VAR_DIR}"),
                             string(name: 'SZ_IP', value: "${szIP}"),
-                            string(name: 'NPROC', value: "16"),
+                            string(name: 'NPROC', value: "10"),
                     ],
                     propagate: false
 
@@ -174,7 +174,7 @@ node {
                     ],
                     propagate: false
         } else {
-            echo "Skip to Create CSV"
+            echo "Skip to Delete Config"
         }
     }
 
